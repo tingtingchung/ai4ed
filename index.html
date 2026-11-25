@@ -5,32 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI in Business Education</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Aleo:wght@500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* VOICE work, for colleagues and conference audiences: plain, exact, a little warm
-   IDEA a department research bulletin board: four projects pinned on one map, each opened up and worked with
-   PICTURE the 2x2 map of who uses AI and how, then one live exhibit per project
-   COLOUR stone ground, black ink, brick accent for "with AI", white panels; night version in warm black
-   TYPE Schibsted Grotesk 800 for titles + Schibsted Grotesk text
-   LAYOUT sticky section bar; hero = title left, map right; sections alternate exhibit and explanation; stacks under 760px */
-:root{color-scheme:light dark;--bg:light-dark(#e7e4df,#171513);--panel:light-dark(#ffffff,#221f1c);--ink:light-dark(#141414,#efebe6);--mute:light-dark(#5b5650,#a9a29a);--line:light-dark(#cfc9c1,#3a3530);--brick:light-dark(#c8371e,#ff7a5c);--slate:light-dark(#3d4a57,#9fb2c4);--soft:light-dark(#f4f1ec,#2a2622)}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+   IDEA a William & Mary research bulletin: four projects pinned on one map, each opened up and worked with
+   PICTURE the 2x2 map of who uses AI and how, on a Dark Green band, then one live exhibit per project
+   COLOUR W&M brand (wm.edu AI brand rules): W&M Green headings and marks, Dark Gold links and second series,
+          W&M Gold decorative rules only, Dark Green hero, Lightest Gold alternate sections, Soft Black body
+   TYPE Aleo headings + Roboto body (W&M web stand-ins for Adelle)
+   LAYOUT sticky section bar; hero = title left, map right; sections alternate; stacks under 834px */
+:root{color-scheme:light;--bg:#ffffff;--panel:#ffffff;--ink:#212220;--head:#004E38;--mute:#565858;--line:#D8DCDB;--brick:#004E38;--slate:#846838;--soft:#F8F4EE;--gold:#B79257;--dkgreen:#183028;--link:#846838;--lgreen:#E5EDEB}
 *{box-sizing:border-box;min-width:0}
 html{scroll-padding-top:64px;scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Schibsted Grotesk",system-ui,sans-serif;overflow-x:clip}
-a{color:var(--brick)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Roboto,Arial,Helvetica,sans-serif;overflow-x:clip}
+a{color:var(--link);text-decoration:underline dashed;text-underline-offset:3px;transition:text-decoration-style .3s}
+a:hover{text-decoration-style:solid}
 button,select,input{font:inherit;color:inherit}
 button{cursor:pointer}
-:focus-visible{outline:3px solid var(--brick);outline-offset:3px}
+:focus-visible{outline:3px solid var(--link);outline-offset:3px}
 .bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 .bar nav{display:flex;gap:4px;overflow-x:auto;padding:8px max(4vw,16px);max-width:1240px;margin:0 auto}
 .bar a{flex:none;text-decoration:none;color:var(--mute);padding:8px 12px;border-radius:8px;font-size:15px;white-space:nowrap}
 .bar a:hover{color:var(--ink);background:var(--soft)}
 .wrap{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px)}
 section{padding:clamp(36px,5vw,72px) 0;border-bottom:1px solid var(--line)}
-h1{font-weight:800;font-size:clamp(34px,4.6vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
-h2{font-weight:800;font-size:clamp(28px,3.4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance;max-width:24em}
-h3{font-size:19px;margin:0 0 6px}
+h1{font-family:Aleo,Georgia,serif;font-weight:700;color:#fff;font-size:clamp(34px,4.6vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h2{font-family:Aleo,Georgia,serif;font-weight:700;color:var(--head);font-size:clamp(28px,3.4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance;max-width:24em}
+h3{font-family:Aleo,Georgia,serif;font-size:20px;color:var(--head);margin:0 0 6px}
 p{margin:0 0 12px}
 .lede{font-size:clamp(17px,1.5vw,19px);color:var(--mute);max-width:44em}
 .kicker{font-size:15px;color:var(--mute);margin-bottom:6px}
@@ -42,22 +43,22 @@ p{margin:0 0 12px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:center}
 .map{position:relative;display:grid;grid-template-columns:2.2em minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) minmax(0,1fr);gap:10px}
-.map .ax{font-size:13px;color:var(--mute);display:flex;align-items:center;justify-content:center;text-align:center}
+.map .ax{font-size:14px;color:var(--lgreen);display:flex;align-items:center;justify-content:center;text-align:center}
 .map .ax.v{writing-mode:vertical-rl;transform:rotate(180deg)}
 .tile{display:block;text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-height:150px;position:relative;transition:transform .2s ease,border-color .2s ease}
-.tile:hover{transform:translateY(-3px);border-color:var(--brick)}
-.tile .tag{display:inline-block;font-size:13px;padding:2px 9px;border-radius:999px;background:var(--soft);color:var(--mute);margin-bottom:8px}
+.tile:hover{transform:translateY(-3px);border-color:var(--gold)}
+.tile .tag{display:inline-block;font-size:14px;padding:2px 9px;border-radius:999px;background:var(--soft);color:var(--mute);margin-bottom:8px}
 .tile b{display:block;font-size:18px;line-height:1.2;margin-bottom:6px}
 .tile span{font-size:15px;color:var(--mute)}
 .tile .big{font-size:28px;font-weight:800;color:var(--brick);line-height:1;display:block;margin-top:10px}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex-wrap:wrap;background:var(--panel)}
 .seg button{border:0;background:transparent;min-height:42px;padding:0 14px;color:var(--mute)}
-.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);font-weight:700}
+.seg button[aria-pressed=true]{background:var(--head);color:#fff;font-weight:700}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .bars{display:grid;gap:14px;margin-top:16px}
 .measure{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:12px;align-items:center}
 .measure .lab b{display:block}
-.measure .lab small{color:var(--mute);font-size:13px}
+.measure .lab small{color:var(--mute);font-size:14px}
 .pair{display:grid;gap:4px}
 .hb{display:grid;grid-template-columns:minmax(0,1fr) 3.4em;gap:8px;align-items:center}
 .hb .t{height:22px;background:var(--soft);border-radius:4px;position:relative;overflow:hidden}
@@ -66,7 +67,7 @@ p{margin:0 0 12px}
 .f.g{background:var(--brick)}.f.c{background:var(--slate)}
 .diff{font-size:14px;color:var(--mute);margin-top:2px}
 .diff b{color:var(--ink)}
-.shade{background:color-mix(in srgb,var(--brick) 8%,transparent);border-radius:10px;padding:8px}
+.shade{background:var(--lgreen);border-radius:10px;padding:8px}
 .key{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--mute);margin-top:10px}
 .key i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
 .stat{font-size:clamp(40px,5vw,64px);font-weight:800;line-height:1;color:var(--brick)}
@@ -81,25 +82,25 @@ p{margin:0 0 12px}
 .detail h4{margin:10px 0 4px;font-size:15px;color:var(--mute);font-weight:500}
 .fig{position:relative;width:100%}
 .fig svg{display:block;width:100%;height:auto}
-svg text{font-family:"Schibsted Grotesk",system-ui,sans-serif}
+svg text{font-family:Roboto,Arial,sans-serif}
 .hyp{width:100%;border-collapse:collapse;font-size:15px}
 .hyp th{text-align:left;color:var(--mute);font-weight:500;border-bottom:1px solid var(--line);padding:6px 8px}
 .hyp td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:top}
 .hyp td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.ok{color:light-dark(#1f7a43,#6fd39a);font-weight:700}.no{color:var(--mute)}
+.ok{color:#146C2E;font-weight:700}.no{color:var(--mute)}
 .scroll{overflow-x:auto}
 .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(15em,1fr));gap:8px}
 .tool{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:left;min-height:44px;transition:opacity .25s ease,border-color .2s}
-.tool code{font-size:13px;display:block;overflow-wrap:anywhere;color:var(--mute)}
+.tool code{font-size:14px;display:block;overflow-wrap:anywhere;color:var(--mute)}
 .tool b{display:block;font-size:15px}
 .tool.dim{opacity:.28}
 .tool.a1{box-shadow:inset 4px 0 0 var(--slate)}.tool.a2{box-shadow:inset 4px 0 0 var(--brick)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font-size:14px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;background:var(--panel);white-space:nowrap}
-.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.on{background:var(--head);color:#fff;border-color:var(--head)}
 .compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
 .memo{font-size:15px;background:var(--soft);border-radius:10px;padding:14px;min-height:160px}
-.memo .bad{background:color-mix(in srgb,var(--brick) 18%,transparent);border-radius:3px;padding:0 2px}
+.memo .bad{background:color-mix(in srgb,#964A37 18%,transparent);border-radius:3px;padding:0 2px}
 .memo .src{font-size:12px;color:var(--mute);vertical-align:super}
 .steps4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;counter-reset:s}
 .steps4 div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
@@ -114,7 +115,7 @@ input[type=range]{width:100%;accent-color:var(--brick);height:28px}
 .rank li.out{opacity:.45}
 .rank .pos{font-weight:800;font-size:20px;color:var(--brick)}
 .rank .nm b{display:block;font-size:15px}
-.rank .nm span{font-size:13px;color:var(--mute)}
+.rank .nm span{font-size:14px;color:var(--mute)}
 .rank .sc{display:grid;grid-template-columns:minmax(0,1fr) 2.6em;gap:6px;align-items:center}
 .rank .sc .t{height:10px;background:var(--soft);border-radius:5px;position:relative;overflow:hidden}
 .rank .sc .f{position:absolute;inset:0 auto 0 0;background:var(--brick);border-radius:5px;transition:width .35s ease}
@@ -134,6 +135,17 @@ input[type=range]{width:100%;accent-color:var(--brick);height:28px}
 .papers li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .papers .venue{font-size:14px;color:var(--mute);text-align:right}
 footer{padding:28px 0 48px;color:var(--mute);font-size:14px}
+#top{background:var(--dkgreen);border-bottom:6px solid var(--gold)}
+#top .lede{color:var(--lgreen)}
+#top .small{color:#d0d9d6}
+#top .tile .tag{background:var(--lgreen);color:var(--head)}
+#learning,#agents,#threads{background:var(--soft)}
+#learning .panel,#agents .panel,#threads .themes button{background:#fff}
+section{border-bottom-color:var(--gold)}
+.kicker b{color:var(--head)}
+.detail{border-left-color:var(--gold)}
+.themes button[aria-pressed=true]{border-color:var(--head);box-shadow:inset 4px 0 0 var(--gold)}
+.stack div:nth-child(3){background:var(--mute)!important}
 @media(max-width:900px){.hero,.grid2,.threads{grid-template-columns:minmax(0,1fr)}.steps4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){body{font-size:16px}.map{grid-template-columns:1.6em minmax(0,1fr) minmax(0,1fr)}.tile{min-height:0;padding:12px}.tile b{font-size:16px}.tile span{display:none}.measure{grid-template-columns:minmax(0,1fr)}.compare,.matrix{grid-template-columns:minmax(0,1fr)}.sl{grid-template-columns:7.5em minmax(0,1fr) 2.6em}.rank li{grid-template-columns:1.6em minmax(0,1fr)}.rank .sc{grid-column:2}.time .r{grid-template-columns:minmax(0,1fr) 4.5em}.time .r .t{grid-column:1/-1;grid-row:2}.papers li{grid-template-columns:minmax(0,1fr)}.papers .venue{text-align:left}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -149,16 +161,16 @@ footer{padding:28px 0 48px;color:var(--mute);font-size:14px}
   <div>
     <h1>AI in business education: what students and faculty learn, teach and build with it</h1>
     <p class="lede">Four projects, one question: when AI enters the work, what do people still understand, trust and own once it steps away? Pick a project on the map, or scroll.</p>
-    <p class="small">Each section below has something to try. Numbers come from the papers unless a section marks them as sample data.</p>
+    <p class="small">Research by William &amp; Mary faculty and students. Each section below has something to try; numbers come from the papers unless a section marks them as sample data.</p>
   </div>
   <div class="map" aria-label="Map of the four projects">
     <div></div><div class="ax">Students</div><div class="ax">Faculty and organizations</div>
     <div class="ax v">Using AI to learn and teach</div>
-    <a class="tile" href="#learning"><span class="tag">Learning with AI</span><b>Good With It, Worse Without It</b><span>A commercial LLM learning mode in two classroom studies</span><em class="big" style="font-style:normal">−13 to −16.5 pts</em><span style="display:block;font-size:13px">once the tool was removed</span></a>
-    <a class="tile" href="#faculty"><span class="tag">Teaching with AI</span><b>Evolving faculty use and integrity concerns</b><span>A two-wave panel, 2024 and 2025</span><em class="big" style="font-style:normal">−0.30</em><span style="display:block;font-size:13px">use in 2024 → fewer integrity concerns in 2025</span></a>
+    <a class="tile" href="#learning"><span class="tag">Learning with AI</span><b>Good With It, Worse Without It</b><span>A commercial LLM learning mode in two classroom studies</span><em class="big" style="font-style:normal">−13 to −16.5 pts</em><span style="display:block;font-size:14px">once the tool was removed</span></a>
+    <a class="tile" href="#faculty"><span class="tag">Teaching with AI</span><b>Evolving faculty use and integrity concerns</b><span>A two-wave panel, 2024 and 2025</span><em class="big" style="font-style:normal">−0.30</em><span style="display:block;font-size:14px">use in 2024 → fewer integrity concerns in 2025</span></a>
     <div class="ax v">Building with AI</div>
-    <a class="tile" href="#agents"><span class="tag">Building agents</span><b>Agents for Business</b><span>MBA teams build agentic AI, one book chapter per business function</span><em class="big" style="font-style:normal">12 tools</em><span style="display:block;font-size:13px">behind one valuation memo</span></a>
-    <a class="tile" href="#grants"><span class="tag">Building for nonprofits</span><b>Grant Central Station</b><span>A customizable AI app for grant discovery and proposals</span><em class="big" style="font-style:normal">17 min</em><span style="display:block;font-size:13px">to search 11 sources and draft 11 sections</span></a>
+    <a class="tile" href="#agents"><span class="tag">Building agents</span><b>Agents for Business</b><span>MBA teams build agentic AI, one book chapter per business function</span><em class="big" style="font-style:normal">12 tools</em><span style="display:block;font-size:14px">behind one valuation memo</span></a>
+    <a class="tile" href="#grants"><span class="tag">Building for nonprofits</span><b>Grant Central Station</b><span>A customizable AI app for grant discovery and proposals</span><em class="big" style="font-style:normal">17 min</em><span style="display:block;font-size:14px">to search 11 sources and draft 11 sections</span></a>
   </div>
 </div></section>
 
@@ -311,7 +323,7 @@ footer{padding:28px 0 48px;color:var(--mute);font-size:14px}
   </ul>
 </div></section>
 </main>
-<footer><div class="wrap">Interactive summary of four research projects. Figures are drawn from the papers; sample data is marked where used.</div></footer>
+<footer><div class="wrap">Interactive summary of four W&amp;M research projects. Figures are drawn from the papers; sample data is marked where used.</div></footer>
 
 <script>
 {
