@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI in Business Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE work, for colleagues and conference audiences: plain, exact, a little warm
+   IDEA a department research bulletin board: four projects pinned on one map, each opened up and worked with
+   PICTURE the 2x2 map of who uses AI and how, then one live exhibit per project
+   COLOUR stone ground, black ink, brick accent for "with AI", white panels; night version in warm black
+   TYPE Schibsted Grotesk 800 for titles + Schibsted Grotesk text
+   LAYOUT sticky section bar; hero = title left, map right; sections alternate exhibit and explanation; stacks under 760px */
+:root{color-scheme:light dark;--bg:light-dark(#e7e4df,#171513);--panel:light-dark(#ffffff,#221f1c);--ink:light-dark(#141414,#efebe6);--mute:light-dark(#5b5650,#a9a29a);--line:light-dark(#cfc9c1,#3a3530);--brick:light-dark(#c8371e,#ff7a5c);--slate:light-dark(#3d4a57,#9fb2c4);--soft:light-dark(#f4f1ec,#2a2622)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:64px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Schibsted Grotesk",system-ui,sans-serif;overflow-x:clip}
+a{color:var(--brick)}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--brick);outline-offset:3px}
+.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar nav{display:flex;gap:4px;overflow-x:auto;padding:8px max(4vw,16px);max-width:1240px;margin:0 auto}
+.bar a{flex:none;text-decoration:none;color:var(--mute);padding:8px 12px;border-radius:8px;font-size:15px;white-space:nowrap}
+.bar a:hover{color:var(--ink);background:var(--soft)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px)}
+section{padding:clamp(36px,5vw,72px) 0;border-bottom:1px solid var(--line)}
+h1{font-weight:800;font-size:clamp(34px,4.6vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h2{font-weight:800;font-size:clamp(28px,3.4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance;max-width:24em}
+h3{font-size:19px;margin:0 0 6px}
+p{margin:0 0 12px}
+.lede{font-size:clamp(17px,1.5vw,19px);color:var(--mute);max-width:44em}
+.kicker{font-size:15px;color:var(--mute);margin-bottom:6px}
+.kicker b{color:var(--brick)}
+.mute{color:var(--mute)}
+.small{font-size:14px;color:var(--mute)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:clamp(16px,2vw,24px)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(18px,3vw,40px);align-items:start}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:center}
+.map{position:relative;display:grid;grid-template-columns:2.2em minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) minmax(0,1fr);gap:10px}
+.map .ax{font-size:13px;color:var(--mute);display:flex;align-items:center;justify-content:center;text-align:center}
+.map .ax.v{writing-mode:vertical-rl;transform:rotate(180deg)}
+.tile{display:block;text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-height:150px;position:relative;transition:transform .2s ease,border-color .2s ease}
+.tile:hover{transform:translateY(-3px);border-color:var(--brick)}
+.tile .tag{display:inline-block;font-size:13px;padding:2px 9px;border-radius:999px;background:var(--soft);color:var(--mute);margin-bottom:8px}
+.tile b{display:block;font-size:18px;line-height:1.2;margin-bottom:6px}
+.tile span{font-size:15px;color:var(--mute)}
+.tile .big{font-size:28px;font-weight:800;color:var(--brick);line-height:1;display:block;margin-top:10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex-wrap:wrap;background:var(--panel)}
+.seg button{border:0;background:transparent;min-height:42px;padding:0 14px;color:var(--mute)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);font-weight:700}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bars{display:grid;gap:14px;margin-top:16px}
+.measure{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:12px;align-items:center}
+.measure .lab b{display:block}
+.measure .lab small{color:var(--mute);font-size:13px}
+.pair{display:grid;gap:4px}
+.hb{display:grid;grid-template-columns:minmax(0,1fr) 3.4em;gap:8px;align-items:center}
+.hb .t{height:22px;background:var(--soft);border-radius:4px;position:relative;overflow:hidden}
+.hb .f{position:absolute;inset:0 auto 0 0;border-radius:4px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.hb .v{font-variant-numeric:tabular-nums;font-size:15px;text-align:right}
+.f.g{background:var(--brick)}.f.c{background:var(--slate)}
+.diff{font-size:14px;color:var(--mute);margin-top:2px}
+.diff b{color:var(--ink)}
+.shade{background:color-mix(in srgb,var(--brick) 8%,transparent);border-radius:10px;padding:8px}
+.key{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--mute);margin-top:10px}
+.key i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+.stat{font-size:clamp(40px,5vw,64px);font-weight:800;line-height:1;color:var(--brick)}
+.stack{display:flex;height:34px;border-radius:6px;overflow:hidden;margin:10px 0 6px}
+.stack div{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
+.themes{display:grid;gap:8px}
+.themes button{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-height:44px}
+.themes button[aria-pressed=true]{border-color:var(--brick);box-shadow:inset 4px 0 0 var(--brick)}
+.themes button b{display:block}
+.themes button span{font-size:14px;color:var(--mute)}
+.detail{border-left:4px solid var(--brick);padding:4px 0 4px 16px}
+.detail h4{margin:10px 0 4px;font-size:15px;color:var(--mute);font-weight:500}
+.fig{position:relative;width:100%}
+.fig svg{display:block;width:100%;height:auto}
+svg text{font-family:"Schibsted Grotesk",system-ui,sans-serif}
+.hyp{width:100%;border-collapse:collapse;font-size:15px}
+.hyp th{text-align:left;color:var(--mute);font-weight:500;border-bottom:1px solid var(--line);padding:6px 8px}
+.hyp td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:top}
+.hyp td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ok{color:light-dark(#1f7a43,#6fd39a);font-weight:700}.no{color:var(--mute)}
+.scroll{overflow-x:auto}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(15em,1fr));gap:8px}
+.tool{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:left;min-height:44px;transition:opacity .25s ease,border-color .2s}
+.tool code{font-size:13px;display:block;overflow-wrap:anywhere;color:var(--mute)}
+.tool b{display:block;font-size:15px}
+.tool.dim{opacity:.28}
+.tool.a1{box-shadow:inset 4px 0 0 var(--slate)}.tool.a2{box-shadow:inset 4px 0 0 var(--brick)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:14px;border:1px solid var(--line);border-radius:999px;padding:4px 11px;background:var(--panel);white-space:nowrap}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.memo{font-size:15px;background:var(--soft);border-radius:10px;padding:14px;min-height:160px}
+.memo .bad{background:color-mix(in srgb,var(--brick) 18%,transparent);border-radius:3px;padding:0 2px}
+.memo .src{font-size:12px;color:var(--mute);vertical-align:super}
+.steps4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;counter-reset:s}
+.steps4 div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.steps4 div b{display:block}
+.steps4 div span{font-size:14px;color:var(--mute)}
+.sl{display:grid;grid-template-columns:10.5em minmax(0,1fr) 3em;gap:10px;align-items:center;margin:6px 0}
+.sl label{font-size:15px}
+.sl output{font-variant-numeric:tabular-nums;text-align:right;font-size:15px}
+input[type=range]{width:100%;accent-color:var(--brick);height:28px}
+.rank{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.rank li{display:grid;grid-template-columns:2em minmax(0,1fr) 9em;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;transition:transform .35s ease}
+.rank li.out{opacity:.45}
+.rank .pos{font-weight:800;font-size:20px;color:var(--brick)}
+.rank .nm b{display:block;font-size:15px}
+.rank .nm span{font-size:13px;color:var(--mute)}
+.rank .sc{display:grid;grid-template-columns:minmax(0,1fr) 2.6em;gap:6px;align-items:center}
+.rank .sc .t{height:10px;background:var(--soft);border-radius:5px;position:relative;overflow:hidden}
+.rank .sc .f{position:absolute;inset:0 auto 0 0;background:var(--brick);border-radius:5px;transition:width .35s ease}
+.rank .sc .v{font-variant-numeric:tabular-nums;font-size:14px;text-align:right}
+.toggle{display:flex;gap:10px;align-items:center;font-size:15px;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--brick)}
+.time{display:grid;gap:10px;margin-top:8px}
+.time .r{display:grid;grid-template-columns:11em minmax(0,1fr) 5em;gap:10px;align-items:center}
+.time .t{height:26px;background:var(--soft);border-radius:4px;position:relative}
+.time .f{position:absolute;inset:0 auto 0 0;border-radius:4px}
+.time .v{font-variant-numeric:tabular-nums;text-align:right;font-weight:700;white-space:nowrap}
+.threads{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:20px;align-items:start}
+.matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.matrix .cell{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.matrix .cell b{display:block;font-size:14px;color:var(--mute);font-weight:500;margin-bottom:4px}
+.papers{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.papers li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.papers .venue{font-size:14px;color:var(--mute);text-align:right}
+footer{padding:28px 0 48px;color:var(--mute);font-size:14px}
+@media(max-width:900px){.hero,.grid2,.threads{grid-template-columns:minmax(0,1fr)}.steps4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){body{font-size:16px}.map{grid-template-columns:1.6em minmax(0,1fr) minmax(0,1fr)}.tile{min-height:0;padding:12px}.tile b{font-size:16px}.tile span{display:none}.measure{grid-template-columns:minmax(0,1fr)}.compare,.matrix{grid-template-columns:minmax(0,1fr)}.sl{grid-template-columns:7.5em minmax(0,1fr) 2.6em}.rank li{grid-template-columns:1.6em minmax(0,1fr)}.rank .sc{grid-column:2}.time .r{grid-template-columns:minmax(0,1fr) 4.5em}.time .r .t{grid-column:1/-1;grid-row:2}.papers li{grid-template-columns:minmax(0,1fr)}.papers .venue{text-align:left}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="bar"><nav aria-label="Sections">
+  <a href="#top">Overview</a><a href="#learning">Learning with AI</a><a href="#faculty">Teaching with AI</a><a href="#agents">Building agents</a><a href="#grants">Building for nonprofits</a><a href="#threads">Common threads</a><a href="#papers">Papers</a>
+</nav></div>
+
+<main>
+<section id="top"><div class="wrap hero">
+  <div>
+    <h1>AI in business education: what students and faculty learn, teach and build with it</h1>
+    <p class="lede">Four projects, one question: when AI enters the work, what do people still understand, trust and own once it steps away? Pick a project on the map, or scroll.</p>
+    <p class="small">Each section below has something to try. Numbers come from the papers unless a section marks them as sample data.</p>
+  </div>
+  <div class="map" aria-label="Map of the four projects">
+    <div></div><div class="ax">Students</div><div class="ax">Faculty and organizations</div>
+    <div class="ax v">Using AI to learn and teach</div>
+    <a class="tile" href="#learning"><span class="tag">Learning with AI</span><b>Good With It, Worse Without It</b><span>A commercial LLM learning mode in two classroom studies</span><em class="big" style="font-style:normal">−13 to −16.5 pts</em><span style="display:block;font-size:13px">once the tool was removed</span></a>
+    <a class="tile" href="#faculty"><span class="tag">Teaching with AI</span><b>Evolving faculty use and integrity concerns</b><span>A two-wave panel, 2024 and 2025</span><em class="big" style="font-style:normal">−0.30</em><span style="display:block;font-size:13px">use in 2024 → fewer integrity concerns in 2025</span></a>
+    <div class="ax v">Building with AI</div>
+    <a class="tile" href="#agents"><span class="tag">Building agents</span><b>Agents for Business</b><span>MBA teams build agentic AI, one book chapter per business function</span><em class="big" style="font-style:normal">12 tools</em><span style="display:block;font-size:13px">behind one valuation memo</span></a>
+    <a class="tile" href="#grants"><span class="tag">Building for nonprofits</span><b>Grant Central Station</b><span>A customizable AI app for grant discovery and proposals</span><em class="big" style="font-style:normal">17 min</em><span style="display:block;font-size:13px">to search 11 sources and draft 11 sections</span></a>
+  </div>
+</div></section>
+
+<!-- ============ EAAI ============ -->
+<section id="learning"><div class="wrap">
+  <div class="kicker"><b>Learning with AI</b> · Lyu, Zhang &amp; Chung · EAAI, accepted</div>
+  <h2>A learning mode helped students finish the worksheet, and left them worse off without it</h2>
+  <p class="lede">Graduate business analytics students learned neural networks with Gemini's Guided Learning, instructor-led teaching, or Gemini's general mode. Same worksheet, same 40 minutes, then a post-test with no devices.</p>
+  <div class="grid2" style="margin-top:20px">
+    <div class="panel">
+      <div class="row">
+        <div class="seg" id="l-study"><button type="button" data-s="1" aria-pressed="true">Study 1 · vs. instructor</button><button type="button" data-s="2" aria-pressed="false">Study 2 · vs. general mode</button></div>
+      </div>
+      <div class="bars" id="l-bars"></div>
+      <div class="key"><span><i style="background:var(--brick)"></i>Guided Learning</span><span><i style="background:var(--slate)"></i><span id="l-cmp">Instructor-led</span></span><span>Shaded: the only measure taken with the tool in hand</span></div>
+      <label class="toggle" id="l-splitwrap"><input type="checkbox" id="l-split"> Split the Study 1 post-test into repeated vs. new-context questions</label>
+      <p class="small" style="margin:0">Percent correct, means from the paper's Table 2. Differences are Guided minus comparison, with 95% CI and Hedges' g.</p>
+    </div>
+    <div>
+      <h3>What students said</h3>
+      <p class="mute">Click a theme. Evidence from focus groups and surveys, and the design opportunity it suggests.</p>
+      <div class="themes" id="l-themes"></div>
+      <div class="detail" id="l-detail" style="margin-top:14px"></div>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:28px;align-items:center">
+    <div>
+      <h3>One week later, after the instructor taught the same material</h3>
+      <div class="stack" role="img" aria-label="Of 46 responses: 30 preferred the instructor, 8 called Gemini complementary, 8 neutral, 0 preferred Gemini">
+        <div style="width:65.2%;background:var(--slate)">30 instructor</div><div style="width:17.4%;background:var(--brick)">8 both</div><div style="width:17.4%;background:var(--mute)">8 neutral</div>
+      </div>
+      <p class="small">46 responses. None preferred learning from Gemini. "I could not have learned this from Gemini for the first time."</p>
+    </div>
+    <div class="panel">
+      <b>Implication for teaching:</b> introduce core concepts first, use the learning mode for practice and self-assessment, and end with an AI-off checkpoint. Ask not only what students complete with the tool, but what they can explain without it.
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ Faculty ============ -->
+<section id="faculty"><div class="wrap">
+  <div class="kicker"><b>Teaching with AI</b> · Schlosser, Chung &amp; Zhang · 2026 Pre-ICIS SIGDSA, research-in-progress</div>
+  <h2>Faculty who used generative AI became less worried about academic integrity a year later</h2>
+  <p class="lede">Surveys of faculty at a mid-sized Mid-Atlantic university in spring 2024 (n = 204) and fall 2025 (n = 276); 91 answered both. Diffusion of innovations as a process: experience at each stage reshapes the next.</p>
+  <div class="grid2" style="margin-top:20px">
+    <div class="panel">
+      <div class="seg" id="f-mode"><button type="button" data-m="paths" aria-pressed="true">Paths</button><button type="button" data-m="year" aria-pressed="false">2024 → 2025</button><button type="button" data-m="panel" aria-pressed="false">Over time (same faculty)</button></div>
+      <div class="fig" style="margin-top:12px"><svg id="f-svg" viewBox="0 0 760 360" role="img" aria-label="Path diagram"></svg></div>
+      <p class="small" id="f-caption" style="margin:6px 0 0"></p>
+    </div>
+    <div>
+      <div class="scroll"><table class="hyp" id="f-table"></table></div>
+      <p class="small" style="margin-top:8px">Unstandardized estimates. Indirect effects: half-longitudinal a × b, bias-corrected 95% bootstrap CIs (5,000 resamples).</p>
+    </div>
+  </div>
+  <div class="grid3" style="margin-top:22px">
+    <div class="panel"><b>Build familiarity early</b><p class="mute" style="margin:4px 0 0">Familiarity predicted later use, which then lowered integrity concerns.</p></div>
+    <div class="panel"><b>Sustain engagement</b><p class="mute" style="margin:4px 0 0">Recalibration needed accumulated experience; the same-year path was not significant. Favor ongoing support over one-time workshops.</p></div>
+    <div class="panel"><b>Reach high-concern, low-use faculty</b><p class="mute" style="margin:4px 0 0">Concerns constrained use at the same time, not later: no avoidance loop was found.</p></div>
+  </div>
+</div></section>
+
+<!-- ============ Agents for Business ============ -->
+<section id="agents"><div class="wrap">
+  <div class="kicker"><b>Building agents</b> · Lawal &amp; Chung · 2026 Pre-ICIS SIGDSA, teaching track</div>
+  <h2>MBA teams built agentic AI for their own business functions, and the class turned it into a book</h2>
+  <p class="lede">Instead of only prompting AI, students designed callable tools and the orchestration logic around them, one chapter per function, unified by an instructor and a student co-editor into <em>Agents for Business</em>.</p>
+  <div class="chips" style="margin:14px 0 22px" aria-label="Chapters by business function">
+    <span class="chip on">Corporate valuation</span><span class="chip">Procurement &amp; supplier evaluation</span><span class="chip">Supply chain disruption</span><span class="chip">HR screening &amp; workforce planning</span><span class="chip">Project risk tracking</span><span class="chip">Customer support triage</span><span class="chip">Winery operations</span>
+  </div>
+  <div class="steps4">
+    <div><b>1 · Core insight</b><span>Why a raw LLM is not enough</span></div>
+    <div><b>2 · Tool design</b><span>Discrete, independently testable functions</span></div>
+    <div><b>3 · Agent in action</b><span>An orchestrated run on a realistic query</span></div>
+    <div><b>4 · Reasoning made visible</b><span>Inspect rather than trust</span></div>
+  </div>
+  <div class="grid2" style="margin-top:24px">
+    <div>
+      <h3>The corporate valuation chapter: 12 tools, 2 agents</h3>
+      <div class="row" style="margin:8px 0 12px"><div class="seg" id="a-filter"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="1" aria-pressed="false">Agent 1 · Fundamental analyst</button><button type="button" data-f="2" aria-pressed="false">Agent 2 · Valuation modeller</button></div></div>
+      <div class="tools" id="a-tools"></div>
+      <p class="small" style="margin-top:8px">Built with the smolagents CodeAgent framework: each tool is a typed Python function with a docstring telling the agent when to call it, drawing live data rather than model guesses.</p>
+    </div>
+    <div class="panel">
+      <h3>"Is this company fairly priced?"</h3>
+      <div class="seg" id="a-mode" style="margin:6px 0 12px"><button type="button" data-m="raw" aria-pressed="true">Raw LLM</button><button type="button" data-m="agent" aria-pressed="false">Agent with tools</button></div>
+      <div class="memo" id="a-memo"></div>
+      <p class="small" style="margin-top:8px">Illustrative memo text for a fictional company. The chapter's point: an LLM can hallucinate financials, which gives students a concrete reason to build grounded tools.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ Grant Central Station ============ -->
+<section id="grants"><div class="wrap">
+  <div class="kicker"><b>Building for nonprofits</b> · Pawar, Muthuraj &amp; Chung · 2026 Pre-ICIS SIGDSA, prototype track</div>
+  <h2>A free, customizable app that finds grants and drafts proposals, built with a nonprofit partner</h2>
+  <p class="lede">The partner could only apply to fewer than 10 grants a year and could not afford commercial search subscriptions. Grant Central Station consolidates discovery and drafting, runs on local open-source models, and scores fit deterministically instead of asking an LLM to judge.</p>
+  <div class="grid2" style="margin-top:20px">
+    <div class="panel">
+      <h3>Re-weight the fit score</h3>
+      <p class="mute" style="font-size:15px">Seven factors, each scored 0–10. Drag a weight and watch the shortlist re-rank. Weights are renormalized to sum to 1.</p>
+      <div id="g-sliders"></div>
+      <div class="row" style="margin-top:6px">
+        <label class="toggle"><input type="checkbox" id="g-gate" checked> Geography as a hard eligibility gate</label>
+        <button type="button" class="seg" id="g-reset" style="min-height:42px;padding:0 14px">Reset to paper weights</button>
+      </div>
+    </div>
+    <div>
+      <ol class="rank" id="g-rank"></ol>
+      <p class="small" style="margin-top:8px">Six sample grants invented for this demo. In the paper's test on 59 real grants from three searches, the top five held across large weight changes: goal alignment could take any value from 0.07 to 0.38 with the same top five.</p>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:28px">
+    <div>
+      <h3>Time per proposal</h3>
+      <div class="time">
+        <div class="r"><span>Grant Central Station<br><span class="small">search 11 sources + draft 11 sections, laptop GPU, local 4B model</span></span><div class="t"><div class="f" style="width:1.05%;background:var(--brick);min-width:4px"></div></div><span class="v">17.3 min</span></div>
+        <div class="r"><span>Benchmark, median<br><span class="small">Project Streamline (2008)</span></span><div class="t"><div class="f" style="width:72.9%;background:var(--slate)"></div></div><span class="v">20 h</span></div>
+        <div class="r"><span>Benchmark, mean</span><div class="t"><div class="f" style="width:100%;background:var(--slate)"></div></div><span class="v">27.45 h</span></div>
+      </div>
+      <p class="small" style="margin-top:8px">Not the same task: the app's output is a draft for human review, which the authors strongly encourage for all outputs.</p>
+    </div>
+    <div class="matrix">
+      <div class="cell"><b>Nulls, not guesses</b>Missing deadlines or amounts show as "Unknown"; an audit of 38 grants found every award amount and deadline matched its source.</div>
+      <div class="cell"><b>Privacy</b>Local Ollama models; documents held in memory only; the cloud database stores metadata.</div>
+      <div class="cell"><b>Grounded drafting</b>Retrieval from past applications, with page-level citations for vetting.</div>
+      <div class="cell"><b>Ethics</b>Possible displacement of grant staff, and grantor preference for human writing: mitigated by reusing the organization's own language.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ Threads ============ -->
+<section id="threads"><div class="wrap">
+  <div class="kicker"><b>Common threads</b></div>
+  <h2>Across the four projects, three lessons repeat</h2>
+  <div class="threads" style="margin-top:18px">
+    <div class="themes" id="t-list"></div>
+    <div class="matrix" id="t-matrix"></div>
+  </div>
+</div></section>
+
+<!-- ============ Papers ============ -->
+<section id="papers"><div class="wrap">
+  <h2>Papers</h2>
+  <ul class="papers" style="margin-top:14px">
+    <li><div><b>Good With It, Worse Without It: Two Classroom Studies of a Commercial LLM Learning Mode</b><div class="small">Wenhan Lyu, Janice Zhang, Tingting Chung</div></div><div class="venue">EAAI<br>Accepted</div></li>
+    <li><div><b>Evolving Faculty Use of Generative AI and Concerns about Academic Integrity</b><div class="small">Pamela Galluch Schlosser, Rachel Chung, Yixuan Zhang</div></div><div class="venue">2026 Pre-ICIS SIGDSA Symposium<br>Research track</div></li>
+    <li><div><b>Agents for Business: A Team-Based Book Project for Teaching Agentic AI Across the Enterprise</b><div class="small">Kate Lawal, Tingting Chung</div></div><div class="venue">2026 Pre-ICIS SIGDSA Symposium<br>Teaching and prototype track</div></li>
+    <li><div><b>Grant Central Station: A Customizable, AI-Augmented Web-Based App to Consolidate Grant Discovery and Proposal Generation</b><div class="small">Mann Pawar, Pooja Muthuraj, Tingting Chung</div></div><div class="venue">2026 Pre-ICIS SIGDSA Symposium<br>Teaching and prototype track</div></li>
+  </ul>
+</div></section>
+</main>
+<footer><div class="wrap">Interactive summary of four research projects. Figures are drawn from the papers; sample data is marked where used.</div></footer>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const press=(seg,attr,val)=>[...seg.children].forEach(b=>b.setAttribute("aria-pressed",b.dataset[attr]===val));
+
+/* ---- Learning mode ---- */
+const STUDY={
+ 1:{cmp:"Instructor-led",rows:[
+   {k:"Pretest",s:"before",g:48.6,c:41.9,d:"+6.7 [−4.1, 17.5]",p:".216",e:"+0.33"},
+   {k:"Worksheet",s:"with support",g:65.4,c:52.1,d:"+13.2 [2.3, 24.2]",p:".018",e:"+0.66",shade:1},
+   {k:"Post-test",s:"independent",g:67.4,c:80.5,d:"−13.0 [−21.2, −4.9]",p:".002",e:"−0.86"}],
+   split:[{k:"Repeated questions",s:"from the pretest",g:72.0,c:79.2,d:"−7.2 [−16.2, 1.9]",p:".117",e:"−0.43"},{k:"New-context questions",s:"principles in unfamiliar settings",g:61.1,c:82.1,d:"−21.1 [−35.4, −6.7]",p:".005",e:"−0.79"}]},
+ 2:{cmp:"General mode",rows:[
+   {k:"Pretest",s:"before",g:38.1,c:18.9,d:"+19.3 [6.2, 32.3]",p:".005",e:"+0.79"},
+   {k:"Worksheet",s:"with support",g:84.7,c:70.4,d:"+14.4 [2.6, 26.1]",p:".017",e:"+0.66",shade:1},
+   {k:"Post-test",s:"independent",g:35.4,c:51.9,d:"−16.5 [−25.4, −7.5]",p:"< .001",e:"−1.01"}]}
+};
+let ls="1";
+function lDraw(){
+  const S=STUDY[ls];$("l-cmp").textContent=S.cmp;
+  let rows=S.rows; if(ls==="1"&&$("l-split").checked) rows=S.rows.slice(0,2).concat(S.split);
+  $("l-splitwrap").style.display=ls==="1"?"flex":"none";
+  $("l-bars").innerHTML=rows.map(r=>`<div class="measure${r.shade?" shade":""}"><div class="lab"><b>${esc(r.k)}</b><small>${esc(r.s)}</small></div><div><div class="pair"><div class="hb"><div class="t"><div class="f g" style="width:${r.g}%"></div></div><span class="v">${r.g.toFixed(1)}</span></div><div class="hb"><div class="t"><div class="f c" style="width:${r.c}%"></div></div><span class="v">${r.c.toFixed(1)}</span></div></div><div class="diff">Diff <b>${esc(r.d)}</b> · p ${esc(r.p)} · g ${esc(r.e)}</div></div></div>`).join("");
+}
+$("l-study").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ls=b.dataset.s;press($("l-study"),"s",ls);lDraw();});
+$("l-split").addEventListener("change",lDraw);
+const THEMES=[
+ {t:"Active questioning",s:"valued",ev:"Five of 14 teams singled out being asked questions before getting an answer: it \"makes you think about what the answer is instead of just giving it to you.\"",op:"Use the learning mode for retrieval practice and self-assessment after a concept has been introduced."},
+ {t:"Personalization",s:"valued",ev:"Students valued asking individualized questions at any time and requesting alternative explanations.",op:"Preserve learner control over pace, examples, and when additional guidance appears."},
+ {t:"Verbosity and pacing",s:"friction",ev:"The most frequent complaint: \"the knowledge per sentence metric was low.\" Extra turns used up a fixed 40-minute session.",op:"Offer concise-first responses and progressive disclosure rather than mandatory conversational turns."},
+ {t:"Prerequisite mismatch",s:"friction",ev:"It introduced the vanishing gradient problem \"without explaining what the vanishing gradient actually does.\"",op:"Diagnose prerequisite knowledge and provide short refreshers before advancing."},
+ {t:"Representation and trust",s:"friction",ev:"Diagrams the mode could not render, calculations that changed across queries, lost context: \"not very certain about how trustworthy anything I was learning was.\"",op:"Add verification cues, stable conversation state, and purpose-built support for math and diagrams."}
+];
+let lt=0;
+function tDraw(){
+  $("l-themes").innerHTML=THEMES.map((x,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===lt}"><b>${esc(x.t)}</b><span>${x.s==="valued"?"What students valued":"Friction"}</span></button>`).join("");
+  const x=THEMES[lt];$("l-detail").innerHTML=`<h4>Evidence</h4><p>${esc(x.ev)}</p><h4>Design opportunity</h4><p style="margin:0">${esc(x.op)}</p>`;
+}
+$("l-themes").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b)return;lt=+b.dataset.i;tDraw();});
+
+/* ---- Faculty path diagram ---- */
+const N={fam:{x:115,y:80,l:"Familiarity"},int:{x:115,y:280,l:"Integrity concerns"},use:{x:380,y:180,l:"Use"},imp:{x:640,y:180,l:"Perceived impact"},yr:{x:640,y:45,l:"Year 2024 → 2025"},
+ yr2:{x:140,y:180,l:"Year 2024 → 2025"},yf:{x:600,y:45,l:"Familiarity"},yi:{x:600,y:135,l:"Integrity concerns"},yu:{x:600,y:225,l:"Use"},yp:{x:600,y:315,l:"Perceived impact"},
+ fam1:{x:130,y:55,l:"Familiarity, 2024"},use1:{x:130,y:180,l:"Use, 2024"},int1:{x:130,y:305,l:"Integrity, 2024"},use2:{x:620,y:95,l:"Use, 2025"},int2:{x:620,y:290,l:"Integrity, 2025"}};
+const MODES={
+ paths:{nodes:["fam","int","use","imp"],cap:"Between-subjects SEM, n = 457 responses. Solid = supported.",edges:[
+   {a:"fam",b:"use",v:"+0.587",ok:1,h:"H1",lab:"Familiarity → Use",p:"< .001"},
+   {a:"int",b:"use",v:"−0.415",ok:1,h:"H2",lab:"Integrity concerns → Use",p:"< .001"},
+   {a:"use",b:"imp",v:"+0.906",ok:1,h:"H3",lab:"Use → Perceived impact",p:"< .001"}]},
+ year:{nodes:["yr2","yf","yi","yu","yp"],cap:"Change from 2024 to 2025: familiarity and concerns rose, use was flat, perceived impact declined.",edges:[
+   {a:"yr2",b:"yf",t:.6,v:"+0.310",ok:1,h:"H4a",lab:"Year → Familiarity",p:"< .001"},
+   {a:"yr2",b:"yi",t:.6,v:"+0.211",ok:1,h:"H4b",lab:"Year → Integrity concerns",p:".005"},
+   {a:"yr2",b:"yu",t:.6,v:"+0.007",ok:0,h:"H4c",lab:"Year → Use",p:".943"},
+   {a:"yr2",b:"yp",t:.6,v:"−0.340",ok:0,h:"H4d",lab:"Year → Perceived impact (declined)",p:"< .001"}]},
+ panel:{nodes:["fam1","int1","use1","use2","int2"],cap:"Cross-lagged panel, 91 faculty who answered both waves. The virtuous pathway runs through use; no avoidance loop appeared.",edges:[
+   {a:"use1",b:"int2",t:.72,v:"−0.304",ok:1,h:"b-path",lab:"Use 2024 → Integrity concerns 2025",p:".002"},
+   {a:"fam1",b:"use2",v:"+0.126",ok:1,h:"H6",lab:"Familiarity 2024 → Use 2025",p:".012"},
+   {a:"int1",b:"use2",t:.2,v:"+0.015",ok:0,h:"H8",lab:"Integrity 2024 → Use 2025",p:".838"},
+   {a:"use2",b:"int2",v:"−0.121",ok:0,h:"H5",lab:"Use 2025 → Integrity 2025 (same wave)",p:".094"}],
+   extra:[{h:"H7",lab:"Indirect: familiarity → use → fewer concerns",v:"−0.038",p:"[−0.107, −0.006]",ok:1},{h:"H9",lab:"Indirect: concerns → less use → concerns",v:"−0.005",p:"[−0.051, 0.050]",ok:0}]}
+};
+let fm="paths";
+function fDraw(){
+  const M=MODES[fm],W=190,H=60;
+  const box=k=>{const n=N[k];return `<g><rect x="${n.x-W/2}" y="${n.y-H/2}" width="${W}" height="${H}" rx="12" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.5"/><text x="${n.x}" y="${n.y+5}" text-anchor="middle" font-size="19" font-weight="700" fill="var(--ink)">${esc(n.l)}</text></g>`;};
+  const edge=e=>{const A=N[e.a],B=N[e.b];const dx=B.x-A.x,dy=B.y-A.y;
+    const clip=(P,dx,dy,s)=>{const tx=Math.abs(dx)>0?(W/2+4)/Math.abs(dx):1e9,ty=Math.abs(dy)>0?(H/2+4)/Math.abs(dy):1e9;const t=Math.min(tx,ty);return [P.x+s*dx*t,P.y+s*dy*t];};
+    const [x1,y1]=clip(A,dx,dy,1),[x2,y2]=clip(B,-dx,-dy,1);
+    const col=e.ok?"var(--brick)":"var(--mute)",tt=e.t||.5,mx=x1+(x2-x1)*tt,my=y1+(y2-y1)*tt;
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${e.ok?3:2}" ${e.ok?"":'stroke-dasharray="7 6"'} marker-end="url(#ah${e.ok?1:0})"/><rect x="${mx-40}" y="${my-16}" width="80" height="30" rx="6" fill="var(--panel)"/><text x="${mx}" y="${my+6}" text-anchor="middle" font-size="18" font-weight="700" fill="${col}">${e.v}</text>`;};
+  $("f-svg").innerHTML=`<defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="var(--brick)"/></marker><marker id="ah0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="var(--mute)"/></marker></defs>`+M.edges.map(edge).join("")+M.nodes.map(box).join("");
+  $("f-caption").textContent=M.cap;
+  const rows=M.edges.concat(M.extra||[]);
+  $("f-table").innerHTML=`<thead><tr><th>Hyp.</th><th>Path</th><th style="text-align:right">Estimate</th><th style="text-align:right">p / 95% CI</th><th>Result</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.h)}</td><td>${esc(r.lab)}</td><td class="n">${esc(r.v)}</td><td class="n">${esc(r.p)}</td><td class="${r.ok?"ok":"no"}">${r.ok?"Supported":"Not supported"}</td></tr>`).join("")}</tbody>`;
+}
+$("f-mode").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;fm=b.dataset.m;press($("f-mode"),"m",fm);fDraw();});
+
+/* ---- Agents for Business ---- */
+const TOOLS=[
+ [1,"fetch_and_summarise_financials","Financial statement EDA","EDA · descriptive stats",1],[2,"plot_revenue_and_margins","Revenue & margin trend","Visualisation",1],
+ [3,"calculate_profitability_ratios","Gross/net margin, ROE, ROA","Ratios",1],[4,"calculate_liquidity_leverage","Current ratio, D/E, coverage","Ratios",1],
+ [5,"calculate_capm_wacc","Cost of equity & WACC","Calculation",2],[6,"run_dcf_model","5-year DCF intrinsic value","Predictive analytics",2],
+ [7,"run_sensitivity_analysis","WACC × TGR matrix","Scenario analysis",2],[8,"forecast_revenue_regression","Linear regression forecast","Predictive analytics",2],
+ [9,"calculate_altman_zscore","Financial distress score","Score",1],[10,"comparable_company_analysis","Peer multiples comps","EDA · ratios",1],
+ [11,"calculate_moving_averages","50/200-day MA trend","Moving averages",1],[12,"generate_investment_memo","Full investment memo","Orchestration",2]];
+let af="all";
+function aTools(){
+  $("a-tools").innerHTML=TOOLS.map(t=>`<div class="tool a${t[4]}${af!=="all"&&String(t[4])!==af?" dim":""}"><b>${t[0]}. ${esc(t[2])}</b><code>${esc(t[1])}</code><span class="small">${esc(t[3])}</span></div>`).join("");
+}
+$("a-filter").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;af=b.dataset.f;press($("a-filter"),"f",af);aTools();});
+const MEMO={
+ raw:`<p><b>Northwind Outfitters (fictional)</b></p><p>Revenue grew to <span class="bad">$4.2B</span> last year with a net margin of <span class="bad">11%</span>. Using a WACC of <span class="bad">8%</span>, the stock looks undervalued.</p><p><b>Signal: BUY</b></p><p class="small">No sources. Figures look plausible but were generated, not retrieved, and cannot be checked.</p>`,
+ agent:`<p><b>Northwind Outfitters (fictional)</b></p><p>Revenue and margins from <code>fetch_and_summarise_financials</code><span class="src">1</span>; WACC from <code>calculate_capm_wacc</code><span class="src">5</span>; intrinsic value from <code>run_dcf_model</code><span class="src">6</span>, stress-tested by <code>run_sensitivity_analysis</code><span class="src">7</span>; distress risk from <code>calculate_altman_zscore</code><span class="src">9</span>.</p><p><b>Signal: BUY / HOLD / SELL</b>, with each number traceable to the tool call that produced it.</p><p class="small">Step 4 of every chapter: open the trace and inspect rather than trust.</p>`
+};
+let am="raw";
+function aMemo(){$("a-memo").innerHTML=MEMO[am];}
+$("a-mode").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;am=b.dataset.m;press($("a-mode"),"m",am);aMemo();});
+
+/* ---- Grant Central Station ---- */
+const FACT=[["goal","Goal alignment",.26],["mission","Mission alignment",.22],["type","Applicant-type fit",.14],["evid","Evidence alignment",.12],["dead","Deadline quality",.10],["fund","Funding level",.08],["geo","Geographic fit",.08]];
+const GRANTS=[
+ {n:"Rural Learning Futures Fund",o:"Family foundation · education",s:{goal:9,mission:8,type:9,evid:7,dead:8,fund:5,geo:10},geo:true},
+ {n:"Community Health Access Grant",o:"State agency · rural health",s:{goal:6,mission:9,type:8,evid:8,dead:6,fund:7,geo:10},geo:true},
+ {n:"Coastal Climate Resilience Awards",o:"Regional foundation · climate",s:{goal:7,mission:6,type:9,evid:6,dead:9,fund:9,geo:3},geo:false},
+ {n:"Global Girls' STEM Initiative",o:"International NGO · education",s:{goal:8,mission:9,type:6,evid:9,dead:4,fund:6,geo:10},geo:true},
+ {n:"Small Nonprofits Capacity Fund",o:"Corporate giving · capacity",s:{goal:5,mission:6,type:10,evid:5,dead:10,fund:4,geo:10},geo:true},
+ {n:"Digital Inclusion Challenge",o:"Federal program · broadband",s:{goal:8,mission:5,type:7,evid:7,dead:7,fund:10,geo:2},geo:false}
+];
+let W={};const resetW=()=>{FACT.forEach(f=>W[f[0]]=f[2]);};resetW();
+function gSliders(){
+  $("g-sliders").innerHTML=FACT.map(f=>`<div class="sl"><label for="w-${f[0]}">${f[1]}</label><input type="range" id="w-${f[0]}" min="0" max="0.5" step="0.01" value="${W[f[0]]}"><output id="o-${f[0]}">${W[f[0]].toFixed(2)}</output></div>`).join("");
+}
+function gRank(){
+  const tot=FACT.reduce((s,f)=>s+W[f[0]],0)||1, gate=$("g-gate").checked;
+  FACT.forEach(f=>{const o=$("o-"+f[0]);if(o)o.textContent=(W[f[0]]/tot).toFixed(2);});
+  const scored=GRANTS.map(g=>({g,score:FACT.reduce((s,f)=>s+(W[f[0]]/tot)*g.s[f[0]],0)*10,out:gate&&!g.geo}));
+  scored.sort((a,b)=>(a.out-b.out)||(b.score-a.score));
+  let k=0;
+  $("g-rank").innerHTML=scored.map(x=>{const pos=x.out?"–":++k;return `<li class="${x.out?"out":""}"><span class="pos">${pos}</span><span class="nm"><b>${esc(x.g.n)}</b><span>${esc(x.g.o)}${x.out?" · outside operating area":""}</span></span><span class="sc"><span class="t"><span class="f" style="width:${x.score}%"></span></span><span class="v">${x.score.toFixed(0)}</span></span></li>`;}).join("");
+}
+$("g-sliders").addEventListener("input",e=>{const id=e.target.id.replace("w-","");W[id]=+e.target.value;gRank();});
+$("g-gate").addEventListener("change",gRank);
+$("g-reset").addEventListener("click",()=>{resetW();gSliders();gRank();});
+
+/* ---- Threads ---- */
+const THREADS=[
+ {t:"Measure what holds up",s:"Not only what gets done in the moment",c:{
+   "Learning with AI":"An AI-off post-test reversed the worksheet ranking in both studies. Build AI-off checkpoints into every session.",
+   "Teaching with AI":"Following the same faculty for a year showed what a single wave hides: use lowered concerns later, not at the same time.",
+   "Building agents":"No formal learning-outcome assessment yet; retention and transfer against instructor-led examples are planned.",
+   "Building for nonprofits":"An audit of 38 grants checked outputs against sources: every award amount and deadline matched."}},
+ {t:"Make the AI's work verifiable",s:"Ground it, cite it, show it",c:{
+   "Learning with AI":"Students could not verify diagrams and calculations; designers should add verification cues.",
+   "Teaching with AI":"Firsthand experience let faculty judge the tools themselves: use predicted fewer integrity concerns a year later.",
+   "Building agents":"Grounded tools replace hallucinated financials; step 4 makes the reasoning visible.",
+   "Building for nonprofits":"Nulls instead of guesses, page-level citations, and deterministic scoring instead of LLM-as-judge."}},
+ {t:"Sequence and sustain, don't drop in",s:"Where AI sits in the process matters",c:{
+   "Learning with AI":"Introduce concepts first, use the learning mode for review, end AI-off.",
+   "Teaching with AI":"Build familiarity early; sustained engagement over one-time workshops.",
+   "Building agents":"A shared four-part notebook pattern, team chapters resequenced as one business process.",
+   "Building for nonprofits":"Discovery and drafting integrated end to end, customized to the partner's own workflow."}}
+];
+let tt=0;
+function thDraw(){
+  $("t-list").innerHTML=THREADS.map((x,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===tt}"><b>${esc(x.t)}</b><span>${esc(x.s)}</span></button>`).join("");
+  const c=THREADS[tt].c;$("t-matrix").innerHTML=Object.keys(c).map(k=>`<div class="cell"><b>${esc(k)}</b>${esc(c[k])}</div>`).join("");
+}
+$("t-list").addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(!b)return;tt=+b.dataset.i;thDraw();});
+
+lDraw();tDraw();fDraw();aTools();aMemo();gSliders();gRank();thDraw();
+}
+</script>
+</body>
+</html>
