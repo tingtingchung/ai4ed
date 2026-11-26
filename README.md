@@ -8,5 +8,3 @@ An interactive overview of four research projects on AI in business education:
 - **Grant Central Station** — a customizable AI app for grant discovery and proposals (2026 Pre-ICIS SIGDSA)
 
 Live site: https://tingtingchung.github.io/ai4ed/
-
-One self-contained `index.html`, no build step. Figures come from the papers; sample data is marked on the page.
